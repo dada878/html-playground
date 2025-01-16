@@ -9,11 +9,13 @@ export default function CodeEditor({
   onChange,
   fontSize = 16,
   showLineNumber = true,
+  enableMiniMap = true,
 }: {
   value: string;
   onChange: (value?: string) => void;
   fontSize: number;
   showLineNumber: boolean;
+  enableMiniMap: boolean;
 }) {
   const inited = useRef(false);
   const monaco = useMonaco();
@@ -63,6 +65,9 @@ export default function CodeEditor({
         options={{
           fontSize: fontSize,
           lineNumbers: showLineNumber ? "on" : "off",
+          minimap: {
+            enabled: enableMiniMap,
+          },
           padding: {
             top: 20,
           },

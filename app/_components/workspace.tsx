@@ -59,6 +59,21 @@ function copyTextToClipboard(text: string) {
   );
 }
 
+function generateUrl(params: Record<string, string>) {
+  const baseUrl = window.location.origin;
+  const queryParams = new URLSearchParams({
+    code: params.code.replaceAll("\n", "\\n"),
+    hideActionbar: params.hideActionbar,
+    direction: params.direction,
+    swapLayout: params.swapLayout,
+    fontSize: params.fontSize,
+    zoom: params.zoom,
+    showLineNumber: params.showLineNumber,
+    enableMiniMap: params.enableMiniMap,
+  });
+  return `${baseUrl}?${queryParams.toString()}`;
+}
+
 export default function Workspace() {
   const params = useSearchParams();
   const defaultCode = params.get("code")?.replaceAll("\\n", "\n");
@@ -69,10 +84,13 @@ export default function Workspace() {
   const defaultShowLineNumber =
     params.get("showLineNumber") === "false" ? false : true;
   const defaultZoom = Number.parseFloat(params.get("zoom") ?? "1.0");
+  const defaultEnableMiniMap =
+    params.get("enableMiniMap") === "false" ? false : true;
   const isHideActionbar = params.get("hideActionbar") === "true";
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
   const [fontSize, setFontSize] = useState(defaultFontSize);
+  const [enableMiniMap, setEnableMiniMap] = useState(defaultEnableMiniMap);
   const [showLineNumber, setShowLineNumber] = useState(defaultShowLineNumber);
   const deferredCode = useDeferredValue(code);
   const [direction, setDirection] = useState<"vertical" | "horizontal">(
@@ -81,7 +99,16 @@ export default function Workspace() {
   const [swapLayout, setSwapLayout] = useState<boolean>(defaultSwapLayout);
 
   function copyLink(hideActionbar: boolean = false) {
-    const url = `${window.location.origin}?code=${encodeURIComponent(code.replaceAll("\n", "\\n"))}&hideActionbar=${hideActionbar}&direction=${direction}&swapLayout=${swapLayout}&fontSize=${fontSize}&zoom=${zoom}&showLineNumber=${showLineNumber}`;
+    const url = generateUrl({
+      code,
+      hideActionbar: `${hideActionbar}`,
+      direction,
+      swapLayout: `${swapLayout}`,
+      fontSize: `${fontSize}`,
+      zoom: `${zoom}`,
+      showLineNumber: `${showLineNumber}`,
+      enableMiniMap: `${enableMiniMap}`,
+    });
     if (url.length >= 2000) {
       alert("程式碼過長無法複製 qwq");
       return;
@@ -150,6 +177,16 @@ export default function Workspace() {
             />
             顯示行號
           </label>
+          <label className="flex gap-1 items-center text-white select-none">
+            <input
+              type="checkbox"
+              checked={enableMiniMap}
+              onChange={(e) => {
+                setEnableMiniMap(e.target.checked);
+              }}
+            />
+            啟用迷你地圖
+          </label>
           <label className="gap-1 items-center hidden">
             <input
               type="checkbox"
@@ -169,6 +206,7 @@ export default function Workspace() {
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-hidden text-white">
             <CodeEditor
+              enableMiniMap={enableMiniMap}
               showLineNumber={showLineNumber}
               fontSize={fontSize}
               value={deferredCode}
@@ -188,7 +226,7 @@ export default function Workspace() {
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-hidden">
             <iframe
-              className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-sm"
+              className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-md"
               style={{
                 transform: `scale(${zoom})`,
               }}
