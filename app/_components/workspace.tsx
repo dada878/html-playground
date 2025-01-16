@@ -81,7 +81,7 @@ export default function Workspace() {
   const [swapLayout, setSwapLayout] = useState<boolean>(defaultSwapLayout);
 
   function copyLink(hideActionbar: boolean = false) {
-    const url = `${window.location.origin}?code=${encodeURIComponent(code.replaceAll("\n", "\\n"))}&hideActionbar=${hideActionbar}&direction=${direction}&swapLayout=${swapLayout}&fontSize=${fontSize}&zoom=${zoom}`;
+    const url = `${window.location.origin}?code=${encodeURIComponent(code.replaceAll("\n", "\\n"))}&hideActionbar=${hideActionbar}&direction=${direction}&swapLayout=${swapLayout}&fontSize=${fontSize}&zoom=${zoom}&showLineNumber=${showLineNumber}`;
     if (url.length >= 2000) {
       alert("程式碼過長無法複製 qwq");
       return;
