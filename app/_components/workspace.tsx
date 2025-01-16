@@ -88,46 +88,46 @@ export default function Workspace() {
   }
 
   return (
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-full h-screen overflow-hidden bg-[#2e3440] p-3 flex flex-col gap-3">
       {!isHideActionbar && (
-        <div className="flex p-1 bg-slate-200 gap-1">
+        <div className="flex bg-transparent gap-3 rounded-md">
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => copyLink()}
           >
             複製連結
           </button>
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => copyLink(true)}
           >
             複製隱藏 Actionbar 的連結
           </button>
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre + 1)}
           >
             編輯器字體增大 {fontSize}
           </button>
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre - 1)}
           >
             編輯器字體縮小 {fontSize}
           </button>
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setZoom((pre) => pre + 0.1)}
           >
             預覽放大 {zoom.toFixed(1)}
           </button>
           <button
-            className="bg-slate-400 py-1 px-3 rounded-md"
+            className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setZoom((pre) => pre - 0.1)}
           >
             預覽縮小 {zoom.toFixed(1)}
           </button>
-          <label className="flex gap-1 items-center">
+          <label className="flex gap-1 items-center text-white select-none">
             <input
               type="checkbox"
               checked={direction === "vertical"}
@@ -149,20 +149,29 @@ export default function Workspace() {
           </label>
         </div>
       )}
-      <ResizablePanelGroup direction={direction} className="h-full w-full">
+      <ResizablePanelGroup
+        direction={direction}
+        className="h-full w-full gap-2"
+      >
         <ResizablePanel>
-          <CodeEditor
-            fontSize={fontSize}
-            value={deferredCode}
-            onChange={(e) => {
-              setCode(e ?? "");
-            }}
-          />
+          <div className="w-full h-full rounded-md overflow-hidden">
+            <CodeEditor
+              fontSize={fontSize}
+              value={deferredCode}
+              onChange={(e) => {
+                setCode(e ?? "");
+              }}
+            />
+          </div>
         </ResizablePanel>
-        <ResizableHandle />
+        <ResizableHandle
+          withHandle={true}
+          className={`text-[#4c566a] bg-slate-500 rounded-md`}
+          color="#1111111"
+        />
         <ResizablePanel>
           <iframe
-            className="w-full h-full overflow-scroll origin-top-left border-none"
+            className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-sm"
             style={{
               transform: `scale(${zoom})`,
             }}

@@ -59,7 +59,7 @@ export default function CodeEditor({
     <>
       <Editor
         options={{ fontSize: fontSize }}
-        className="w-full h-full resize text-xl"
+        className="w-full h-full resize text-xl rounded-md"
         onChange={(e) => {
           onChange(e);
         }}
