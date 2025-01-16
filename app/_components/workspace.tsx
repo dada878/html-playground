@@ -70,8 +70,21 @@ function generateUrl(params: Record<string, string>) {
     zoom: params.zoom,
     showLineNumber: params.showLineNumber,
     enableMiniMap: params.enableMiniMap,
+    isShowMacButtons: params.isShowMacButtons,
   });
   return `${baseUrl}?${queryParams.toString()}`;
+}
+
+function Circle({ color, radius }: { color: string; radius: number }) {
+  return (
+    <svg
+      height={radius * 2}
+      width={radius * 2}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle r={radius} cx={radius} cy={radius} fill={color} />
+    </svg>
+  );
 }
 
 export default function Workspace() {
@@ -87,8 +100,13 @@ export default function Workspace() {
   const defaultEnableMiniMap =
     params.get("enableMiniMap") === "false" ? false : true;
   const isHideActionbar = params.get("hideActionbar") === "true";
+  const defaultIsShowMacButtons =
+    params.get("isShowMacButtons") === "true" ? true : false;
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [isShowMacButtons, setIsShowMacButtons] = useState(
+    defaultIsShowMacButtons,
+  );
   const [fontSize, setFontSize] = useState(defaultFontSize);
   const [enableMiniMap, setEnableMiniMap] = useState(defaultEnableMiniMap);
   const [showLineNumber, setShowLineNumber] = useState(defaultShowLineNumber);
@@ -108,6 +126,7 @@ export default function Workspace() {
       zoom: `${zoom}`,
       showLineNumber: `${showLineNumber}`,
       enableMiniMap: `${enableMiniMap}`,
+      isShowMacButtons: `${isShowMacButtons}`,
     });
     if (url.length >= 2000) {
       alert("程式碼過長無法複製 qwq");
@@ -119,8 +138,15 @@ export default function Workspace() {
 
   return (
     <div className="w-full h-screen overflow-hidden bg-[#2e3440] p-3 flex flex-col gap-3">
+      {isShowMacButtons && (
+        <div className="flex p-2 gap-2">
+          <Circle color="#FF5F56" radius={7} />
+          <Circle color="#FFBD2D" radius={7} />
+          <Circle color="#26C940" radius={7} />
+        </div>
+      )}
       {!isHideActionbar && (
-        <div className="flex bg-transparent gap-3 rounded-md">
+        <div className="flex bg-transparent gap-3 rounded-md items-center">
           <button
             className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => copyLink()}
@@ -186,6 +212,16 @@ export default function Workspace() {
               }}
             />
             啟用迷你地圖
+          </label>
+          <label className="flex gap-1 items-center text-white select-none">
+            <input
+              type="checkbox"
+              checked={isShowMacButtons}
+              onChange={(e) => {
+                setIsShowMacButtons(e.target.checked);
+              }}
+            />
+            顯示神奇按鈕
           </label>
           <label className="gap-1 items-center hidden">
             <input
