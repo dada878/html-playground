@@ -172,13 +172,15 @@ export default function Workspace() {
           />
         )}
         <ResizablePanel>
-          <iframe
-            className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-sm"
-            style={{
-              transform: `scale(${zoom})`,
-            }}
-            src={`data:text/html;charset=utf-8,${encodeURIComponent(code)}`}
-          />
+          <div className="w-full h-full rounded-md overflow-hidden">
+            <iframe
+              className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-sm"
+              style={{
+                transform: `scale(${zoom})`,
+              }}
+              src={`data:text/html;charset=utf-8,${encodeURIComponent(code)}`}
+            />
+          </div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
