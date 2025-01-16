@@ -151,7 +151,7 @@ export default function Workspace() {
       )}
       <ResizablePanelGroup
         direction={direction}
-        className="h-full w-full gap-2"
+        className={`h-full w-full ${isHideActionbar ? "gap-3" : "gap-2"}`}
       >
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-hidden">
@@ -164,11 +164,13 @@ export default function Workspace() {
             />
           </div>
         </ResizablePanel>
-        <ResizableHandle
-          withHandle={true}
-          className={`text-[#4c566a] bg-slate-500 rounded-md`}
-          color="#1111111"
-        />
+        {!isHideActionbar && (
+          <ResizableHandle
+            withHandle={true}
+            className={`text-[#4c566a] bg-slate-500 rounded-md`}
+            color="#1111111"
+          />
+        )}
         <ResizablePanel>
           <iframe
             className="w-full h-full overflow-scroll origin-top-left border-none bg-white rounded-sm"
