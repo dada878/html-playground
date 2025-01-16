@@ -139,7 +139,7 @@ export default function Workspace() {
   return (
     <div className="w-full h-screen overflow-hidden bg-[#2e3440] p-3 flex flex-col gap-3">
       {isShowMacButtons && (
-        <div className="flex p-2 gap-2">
+        <div className="flex p-2 pb-1 gap-2">
           <Circle color="#FF5F56" radius={7} />
           <Circle color="#FFBD2D" radius={7} />
           <Circle color="#26C940" radius={7} />
