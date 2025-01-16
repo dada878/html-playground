@@ -8,10 +8,12 @@ export default function CodeEditor({
   value,
   onChange,
   fontSize = 16,
+  showLineNumber = true,
 }: {
   value: string;
   onChange: (value?: string) => void;
   fontSize: number;
+  showLineNumber: boolean;
 }) {
   const inited = useRef(false);
   const monaco = useMonaco();
@@ -58,7 +60,13 @@ export default function CodeEditor({
   return (
     <>
       <Editor
-        options={{ fontSize: fontSize }}
+        options={{
+          fontSize: fontSize,
+          lineNumbers: showLineNumber ? "on" : "off",
+          padding: {
+            top: 20,
+          },
+        }}
         className="w-full h-full resize text-xl rounded-md"
         onChange={(e) => {
           onChange(e);

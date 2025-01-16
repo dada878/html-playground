@@ -66,11 +66,14 @@ export default function Workspace() {
     params.get("direction") === "vertical" ? "vertical" : "horizontal";
   const defaultSwapLayout = params.get("swapLayout") === "true" ? true : false;
   const defaultFontSize = Number.parseInt(params.get("fontSize") ?? "16");
+  const defaultShowLineNumber =
+    params.get("showLineNumber") === "false" ? false : true;
   const defaultZoom = Number.parseFloat(params.get("zoom") ?? "1.0");
   const isHideActionbar = params.get("hideActionbar") === "true";
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
   const [fontSize, setFontSize] = useState(defaultFontSize);
+  const [showLineNumber, setShowLineNumber] = useState(defaultShowLineNumber);
   const deferredCode = useDeferredValue(code);
   const [direction, setDirection] = useState<"vertical" | "horizontal">(
     defaultDirection,
@@ -137,6 +140,16 @@ export default function Workspace() {
             />
             縱向佈局
           </label>
+          <label className="flex gap-1 items-center text-white select-none">
+            <input
+              type="checkbox"
+              checked={showLineNumber}
+              onChange={(e) => {
+                setShowLineNumber(e.target.checked);
+              }}
+            />
+            顯示行號
+          </label>
           <label className="gap-1 items-center hidden">
             <input
               type="checkbox"
@@ -154,8 +167,9 @@ export default function Workspace() {
         className={`h-full w-full ${isHideActionbar ? "gap-3" : "gap-2"}`}
       >
         <ResizablePanel>
-          <div className="w-full h-full rounded-md overflow-hidden">
+          <div className="w-full h-full rounded-md overflow-hidden text-white">
             <CodeEditor
+              showLineNumber={showLineNumber}
               fontSize={fontSize}
               value={deferredCode}
               onChange={(e) => {
