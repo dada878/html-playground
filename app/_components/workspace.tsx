@@ -148,6 +148,11 @@ export default function Workspace() {
             <Circle color="#26C940" radius={7} />
           </div>
           <div className="flex-1 text-center text-white">code.html</div>
+          <div className="flex p-2 gap-2">
+            <Circle color="transparent" radius={7} />
+            <Circle color="transparent" radius={7} />
+            <Circle color="transparent" radius={7} />
+          </div>
         </div>
       )}
       {!isHideActionbar && (
