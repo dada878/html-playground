@@ -66,8 +66,10 @@ export default function Workspace() {
     params.get("direction") === "vertical" ? "vertical" : "horizontal";
   const defaultSwapLayout = params.get("swapLayout") === "true" ? true : false;
   const defaultFontSize = Number.parseInt(params.get("fontSize") ?? "16");
+  const defaultZoom = Number.parseFloat(params.get("zoom") ?? "1.0");
   const isHideActionbar = params.get("hideActionbar") === "true";
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
+  const [zoom, setZoom] = useState(defaultZoom);
   const [fontSize, setFontSize] = useState(defaultFontSize);
   const deferredCode = useDeferredValue(code);
   const [direction, setDirection] = useState<"vertical" | "horizontal">(
@@ -76,7 +78,7 @@ export default function Workspace() {
   const [swapLayout, setSwapLayout] = useState<boolean>(defaultSwapLayout);
 
   function copyLink(hideActionbar: boolean = false) {
-    const url = `${window.location.origin}?code=${encodeURIComponent(code.replaceAll("\n", "\\n"))}&hideActionbar=${hideActionbar}&direction=${direction}&swapLayout=${swapLayout}&fontSize=${fontSize}`;
+    const url = `${window.location.origin}?code=${encodeURIComponent(code.replaceAll("\n", "\\n"))}&hideActionbar=${hideActionbar}&direction=${direction}&swapLayout=${swapLayout}&fontSize=${fontSize}&zoom=${zoom}`;
     if (url.length >= 2000) {
       alert("程式碼過長無法複製 qwq");
       return;
@@ -105,13 +107,25 @@ export default function Workspace() {
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre + 1)}
           >
-            文字增大
+            編輯器字體增大
           </button>
           <button
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre - 1)}
           >
-            文字縮小
+            編輯器字體縮小
+          </button>
+          <button
+            className="bg-slate-400 py-1 px-3 rounded-md"
+            onClick={() => setZoom((pre) => pre + 0.1)}
+          >
+            預覽放大
+          </button>
+          <button
+            className="bg-slate-400 py-1 px-3 rounded-md"
+            onClick={() => setZoom((pre) => pre - 0.1)}
+          >
+            預覽縮小
           </button>
           <label className="flex gap-1 items-center">
             <input
@@ -148,7 +162,10 @@ export default function Workspace() {
         <ResizableHandle />
         <ResizablePanel>
           <div
-            className="w-full h-full overflow-y-scroll"
+            className="w-full h-full overflow-y-scroll origin-top-left"
+            style={{
+              transform: `scale(${zoom})`,
+            }}
             dangerouslySetInnerHTML={{
               __html: code,
             }}
