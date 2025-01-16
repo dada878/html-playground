@@ -107,25 +107,25 @@ export default function Workspace() {
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre + 1)}
           >
-            編輯器字體增大
+            編輯器字體增大 {fontSize}
           </button>
           <button
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre - 1)}
           >
-            編輯器字體縮小
+            編輯器字體縮小 {fontSize}
           </button>
           <button
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setZoom((pre) => pre + 0.1)}
           >
-            預覽放大
+            預覽放大 {zoom.toFixed(1)}
           </button>
           <button
             className="bg-slate-400 py-1 px-3 rounded-md"
             onClick={() => setZoom((pre) => pre - 0.1)}
           >
-            預覽縮小
+            預覽縮小 {zoom.toFixed(1)}
           </button>
           <label className="flex gap-1 items-center">
             <input
@@ -161,15 +161,13 @@ export default function Workspace() {
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>
-          <div
-            className="w-full h-full overflow-y-scroll origin-top-left"
+          <iframe
+            className="w-full h-full overflow-y-scroll origin-top-left border-none"
             style={{
               transform: `scale(${zoom})`,
             }}
-            dangerouslySetInnerHTML={{
-              __html: code,
-            }}
-          ></div>
+            src={`data:text/html;charset=utf-8,${encodeURIComponent(code)}`}
+          />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>
