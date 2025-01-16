@@ -162,7 +162,7 @@ export default function Workspace() {
         <ResizableHandle />
         <ResizablePanel>
           <iframe
-            className="w-full h-full overflow-y-scroll origin-top-left border-none"
+            className="w-full h-full overflow-scroll origin-top-left border-none"
             style={{
               transform: `scale(${zoom})`,
             }}
