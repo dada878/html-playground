@@ -272,7 +272,7 @@ export default function Workspace() {
             <iframe
               className="w-full h-full origin-top-left border-none overflow-scroll bg-white"
               style={{
-                transform: `scale(${zoom})`,
+                zoom: zoom,
               }}
               src={`data:text/html;charset=utf-8,${encodeURIComponent(code)}`}
             />
