@@ -131,7 +131,7 @@ export default function Workspace() {
       enableMiniMap: `${enableMiniMap}`,
       isShowMacButtons: `${isShowMacButtons}`,
     });
-    if (url.length >= 2000) {
+    if (url.length >= 20000) {
       alert("程式碼過長無法複製 qwq");
       return;
     }
