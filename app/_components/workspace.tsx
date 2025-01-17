@@ -268,9 +268,9 @@ export default function Workspace() {
           color="#1111111"
         />
         <ResizablePanel>
-          <div className="w-full h-full rounded-md overflow-y-scroll overflow-x-hidden">
+          <div className="w-full h-full rounded-md overflow-hidden">
             <iframe
-              className="w-full h-full origin-top-left border-none bg-white"
+              className="w-full h-full origin-top-left border-none overflow-scroll bg-white"
               style={{
                 transform: `scale(${zoom})`,
               }}
