@@ -62,7 +62,7 @@ function copyTextToClipboard(text: string) {
 function generateUrl(params: Record<string, string>) {
   const baseUrl = window.location.origin;
   const queryParams = new URLSearchParams({
-    code: params.code.replaceAll("\n", "\\n"),
+    code: params.code.replaceAll("\n", "\\n").replaceAll("\t", "\\t"),
     hideActionbar: params.hideActionbar,
     direction: params.direction,
     swapLayout: params.swapLayout,
@@ -89,7 +89,10 @@ function Circle({ color, radius }: { color: string; radius: number }) {
 
 export default function Workspace() {
   const params = useSearchParams();
-  const defaultCode = params.get("code")?.replaceAll("\\n", "\n");
+  const defaultCode = params
+    .get("code")
+    ?.replaceAll("\\n", "\n")
+    ?.replaceAll("\\t", "\t");
   const defaultDirection =
     params.get("direction") === "vertical" ? "vertical" : "horizontal";
   const defaultSwapLayout = params.get("swapLayout") === "true" ? true : false;
