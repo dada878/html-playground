@@ -247,7 +247,7 @@ export default function Workspace() {
       )}
       <ResizablePanelGroup
         direction={direction}
-        className={`h-full w-full ${isHideActionbar ? "gap-1" : "gap-2"}`}
+        className={`h-full w-full ${isHideActionbar ? "gap-2" : "gap-2"}`}
       >
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-hidden text-white">
