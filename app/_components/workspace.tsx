@@ -264,7 +264,7 @@ export default function Workspace() {
         </ResizablePanel>
         <ResizableHandle
           withHandle={true}
-          className={`text-[#4c566a] bg-slate-500 rounded-md ${isHideActionbar && "opacity-0"}`}
+          className={`text-[#4c566a] bg-slate-500 rounded-md opacity-0`}
           color="#1111111"
         />
         <ResizablePanel>
