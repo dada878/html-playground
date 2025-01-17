@@ -262,13 +262,11 @@ export default function Workspace() {
             />
           </div>
         </ResizablePanel>
-        {!isHideActionbar && (
-          <ResizableHandle
-            withHandle={true}
-            className={`text-[#4c566a] bg-slate-500 rounded-md`}
-            color="#1111111"
-          />
-        )}
+        <ResizableHandle
+          withHandle={true}
+          className={`text-[#4c566a] bg-slate-500 rounded-md ${isHideActionbar ?? "opacity-0"}`}
+          color="#1111111"
+        />
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-y-scroll overflow-x-hidden">
             <iframe
