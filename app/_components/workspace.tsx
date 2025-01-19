@@ -264,7 +264,7 @@ export default function Workspace() {
         direction={direction}
         className={`h-full w-full ${isHideActionbar ? "gap-2" : "gap-2"}`}
       >
-        {hideCode && (
+        {!hideCode && (
           <>
             <ResizablePanel>
               <div className="w-full h-full rounded-md overflow-hidden text-white">
