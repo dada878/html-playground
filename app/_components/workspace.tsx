@@ -71,6 +71,7 @@ function generateUrl(params: Record<string, string>) {
     showLineNumber: params.showLineNumber,
     enableMiniMap: params.enableMiniMap,
     isShowMacButtons: params.isShowMacButtons,
+    hideCode: params.hideCode,
   });
   return `${baseUrl}?${queryParams.toString()}`;
 }
@@ -132,6 +133,7 @@ export default function Workspace() {
       showLineNumber: `${showLineNumber}`,
       enableMiniMap: `${enableMiniMap}`,
       isShowMacButtons: `${isShowMacButtons}`,
+      hideCode: `${hideCode}`,
     });
     if (url.length >= 200000) {
       alert("程式碼過長無法複製 qwq");
