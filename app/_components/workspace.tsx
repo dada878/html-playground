@@ -97,6 +97,7 @@ export default function Workspace() {
     params.get("direction") === "vertical" ? "vertical" : "horizontal";
   const defaultSwapLayout = params.get("swapLayout") === "true" ? true : false;
   const defaultFontSize = Number.parseInt(params.get("fontSize") ?? "16");
+  const defaultHideCode = params.get("hideCode") === "true" ? true : false;
   const defaultShowLineNumber =
     params.get("showLineNumber") === "false" ? false : true;
   const defaultZoom = Number.parseFloat(params.get("zoom") ?? "1.0");
@@ -107,6 +108,7 @@ export default function Workspace() {
     params.get("isShowMacButtons") === "true" ? true : false;
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [hideCode, setHideCode] = useState(defaultHideCode);
   const [isShowMacButtons, setIsShowMacButtons] = useState(
     defaultIsShowMacButtons,
   );
@@ -170,19 +172,19 @@ export default function Workspace() {
             className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => copyLink(true)}
           >
-            複製隱藏 Actionbar 的連結
+            複製連結 (隱藏功能列)
           </button>
           <button
             className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre + 1)}
           >
-            編輯器字體增大 {fontSize}
+            程式字體增大 {fontSize}
           </button>
           <button
             className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
             onClick={() => setFontSize((pre) => pre - 1)}
           >
-            編輯器字體縮小 {fontSize}
+            程式字體縮小 {fontSize}
           </button>
           <button
             className="bg-[#4c566a] text-white py-1 px-3 rounded-md"
@@ -214,7 +216,7 @@ export default function Workspace() {
                 setShowLineNumber(e.target.checked);
               }}
             />
-            顯示行號
+            行號
           </label>
           <label className="flex gap-1 items-center text-white select-none">
             <input
@@ -224,7 +226,7 @@ export default function Workspace() {
                 setEnableMiniMap(e.target.checked);
               }}
             />
-            啟用迷你地圖
+            迷你地圖
           </label>
           <label className="flex gap-1 items-center text-white select-none">
             <input
@@ -235,6 +237,16 @@ export default function Workspace() {
               }}
             />
             顯示神奇按鈕
+          </label>
+          <label className="flex gap-1 items-center text-white select-none">
+            <input
+              type="checkbox"
+              checked={hideCode}
+              onChange={(e) => {
+                setHideCode(e.target.checked);
+              }}
+            />
+            隱藏程式區塊
           </label>
           <label className="gap-1 items-center hidden">
             <input
@@ -252,24 +264,28 @@ export default function Workspace() {
         direction={direction}
         className={`h-full w-full ${isHideActionbar ? "gap-2" : "gap-2"}`}
       >
-        <ResizablePanel>
-          <div className="w-full h-full rounded-md overflow-hidden text-white">
-            <CodeEditor
-              enableMiniMap={enableMiniMap}
-              showLineNumber={showLineNumber}
-              fontSize={fontSize}
-              value={deferredCode}
-              onChange={(e) => {
-                setCode(e ?? "");
-              }}
+        {hideCode && (
+          <>
+            <ResizablePanel>
+              <div className="w-full h-full rounded-md overflow-hidden text-white">
+                <CodeEditor
+                  enableMiniMap={enableMiniMap}
+                  showLineNumber={showLineNumber}
+                  fontSize={fontSize}
+                  value={deferredCode}
+                  onChange={(e) => {
+                    setCode(e ?? "");
+                  }}
+                />
+              </div>
+            </ResizablePanel>
+            <ResizableHandle
+              withHandle={true}
+              className={`text-[#4c566a] bg-slate-500 rounded-md opacity-0`}
+              color="#1111111"
             />
-          </div>
-        </ResizablePanel>
-        <ResizableHandle
-          withHandle={true}
-          className={`text-[#4c566a] bg-slate-500 rounded-md opacity-0`}
-          color="#1111111"
-        />
+          </>
+        )}
         <ResizablePanel>
           <div className="w-full h-full rounded-md overflow-hidden">
             <iframe
