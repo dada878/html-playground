@@ -76,9 +76,18 @@ function generateUrl(params: Record<string, string>) {
   return `${baseUrl}?${queryParams.toString()}`;
 }
 
-function Circle({ color, radius }: { color: string; radius: number }) {
+function Circle({
+  color,
+  radius,
+  onClick,
+}: {
+  color: string;
+  radius: number;
+  onClick?: () => void;
+}) {
   return (
     <svg
+      onClick={onClick}
       height={radius * 2}
       width={radius * 2}
       xmlns="http://www.w3.org/2000/svg"
@@ -150,9 +159,23 @@ export default function Workspace() {
       {isShowMacButtons && (
         <div className="flex items-center">
           <div className="flex p-2 gap-2">
-            <Circle color="#FF5F56" radius={7} />
+            <Circle
+              color="#FF5F56"
+              radius={7}
+              onClick={() => {
+                setZoom((pre) => pre - 0.1);
+                setFontSize((pre) => pre - 1);
+              }}
+            />
             <Circle color="#FFBD2D" radius={7} />
-            <Circle color="#26C940" radius={7} />
+            <Circle
+              color="#26C940"
+              radius={7}
+              onClick={() => {
+                setZoom((pre) => pre + 0.1);
+                setFontSize((pre) => pre + 1);
+              }}
+            />
           </div>
           <div className="flex-1 text-center text-white">code.html</div>
           <div className="flex p-2 gap-2">
