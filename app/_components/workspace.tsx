@@ -113,11 +113,14 @@ export default function Workspace() {
   const defaultZoom = Number.parseFloat(params.get("zoom") ?? "1.0");
   const defaultEnableMiniMap =
     params.get("enableMiniMap") === "false" ? false : true;
-  const isHideActionbar = params.get("hideActionbar") === "true";
+  const defaultIsHideActionbar = params.get("hideActionbar") === "true";
   const defaultIsShowMacButtons =
     params.get("isShowMacButtons") === "true" ? true : false;
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [isHideActionbar, setIsHideActionbar] = useState(
+    defaultIsHideActionbar,
+  );
   const [hideCode, setHideCode] = useState(defaultHideCode);
   const [isShowMacButtons, setIsShowMacButtons] = useState(
     defaultIsShowMacButtons,
@@ -167,7 +170,13 @@ export default function Workspace() {
                 setFontSize((pre) => pre - 1);
               }}
             />
-            <Circle color="#FFBD2D" radius={7} />
+            <Circle
+              color="#FFBD2D"
+              radius={7}
+              onClick={() => {
+                setIsHideActionbar((pre) => !pre);
+              }}
+            />
             <Circle
               color="#26C940"
               radius={7}
@@ -289,7 +298,7 @@ export default function Workspace() {
       )}
       <ResizablePanelGroup
         direction={direction}
-        className={`h-full w-full ${isHideActionbar ? "gap-2" : "gap-2"}`}
+        className={`h-full w-full gap-2`}
       >
         {!hideCode && (
           <>
