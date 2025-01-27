@@ -118,9 +118,7 @@ export default function Workspace() {
     params.get("isShowMacButtons") === "true" ? true : false;
   const [code, setCode] = useState(defaultCode ?? HTML5_TEMPLATE);
   const [zoom, setZoom] = useState(defaultZoom);
-  const [isHideActionbar, setIsHideActionbar] = useState(
-    defaultIsHideActionbar,
-  );
+  const [isHideActionbar] = useState(defaultIsHideActionbar);
   const [hideCode, setHideCode] = useState(defaultHideCode);
   const [isShowMacButtons, setIsShowMacButtons] = useState(
     defaultIsShowMacButtons,
