@@ -174,7 +174,7 @@ export default function Workspace() {
               color="#FFBD2D"
               radius={7}
               onClick={() => {
-                setIsHideActionbar((pre) => !pre);
+                setHideCode((pre) => !pre);
               }}
             />
             <Circle
